@@ -10,252 +10,346 @@
 :root{
   --black:#080808;--dark:#0f0f0f;--card:#141414;
   --gold:#C9A84C;--gold2:#E8C97A;--cream:#F0EBE0;
-  --white:#fff;--muted:#6e6e6e;--border:rgba(201,168,76,.15);
+  --white:#fff;--muted:#686868;--border:rgba(201,168,76,.15);
 }
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
 ::-webkit-scrollbar{width:2px}::-webkit-scrollbar-thumb{background:var(--gold)}
+@media(pointer:coarse){body{cursor:auto}}
 
-/* LOADER */
-#loader{position:fixed;inset:0;z-index:9999;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .6s,visibility .6s}
+/* ══ LOADER ══ */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .7s .1s,visibility .7s .1s}
 #loader.hide{opacity:0;visibility:hidden}
-.loader-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,8vw,80px);letter-spacing:10px;color:var(--white);display:flex;overflow:hidden}
-.loader-text span{transform:translateY(110%);animation:liftChar .7s cubic-bezier(.16,1,.3,1) forwards}
+.ld-logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,7vw,70px);letter-spacing:10px;color:var(--white);display:flex;overflow:hidden}
+.ld-logo span{transform:translateY(110%);animation:liftChar .72s cubic-bezier(.16,1,.3,1) forwards;display:inline-block}
 @keyframes liftChar{to{transform:translateY(0)}}
-.loader-bar-wrap{width:220px;height:1px;background:rgba(201,168,76,.2);overflow:hidden}
-.loader-bar{height:100%;width:0;background:var(--gold);animation:barFill 1.6s .2s cubic-bezier(.16,1,.3,1) forwards}
-@keyframes barFill{to{width:100%}}
+.ld-row{display:flex;align-items:center;gap:14px;opacity:0;animation:fi .5s 1s forwards}
+.ld-line{height:1px;width:55px;background:linear-gradient(to right,transparent,var(--gold));animation:expLine .7s 1s cubic-bezier(.16,1,.3,1) forwards;transform:scaleX(0);transform-origin:right}
+.ld-line.r{background:linear-gradient(to left,transparent,var(--gold));transform-origin:left}
+.ld-icon{font-size:28px}
+@keyframes expLine{to{transform:scaleX(1)}}
+@keyframes fi{to{opacity:1}}
+.ld-bar-wrap{width:200px;height:1px;background:rgba(201,168,76,.15);overflow:hidden}
+.ld-bar{height:100%;width:0;background:var(--gold);animation:bFill 1.7s .1s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes bFill{to{width:100%}}
+.ld-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);opacity:0;animation:fi .6s 1.3s forwards}
 
-/* CURSOR */
-.cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:8000;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border .3s}
-.cur-r{position:fixed;width:34px;height:34px;border:1px solid rgba(201,168,76,.55);border-radius:50%;pointer-events:none;z-index:7999;transform:translate(-50%,-50%);transition:transform .2s}
+/* ══ CURSOR ══ */
+.cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:8000;transform:translate(-50%,-50%);transition:width .28s,height .28s,background .28s,border .28s}
+.cur-r{position:fixed;width:32px;height:32px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:7999;transform:translate(-50%,-50%)}
 .trail{position:fixed;border-radius:50%;background:var(--gold);pointer-events:none;z-index:7998;transform:translate(-50%,-50%)}
+@media(pointer:coarse){.cur,.cur-r,.trail{display:none}}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 52px;transition:all .5s cubic-bezier(.16,1,.3,1)}
-nav.scrolled{background:rgba(8,8,8,.94);backdrop-filter:blur(20px);padding:14px 52px;border-bottom:1px solid var(--border)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--white);text-decoration:none;transition:letter-spacing .4s}
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;transition:all .5s cubic-bezier(.16,1,.3,1)}
+nav.scrolled{background:rgba(8,8,8,.96);backdrop-filter:blur(22px);padding:13px 48px;border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:5px;color:var(--white);text-decoration:none;transition:letter-spacing .4s}
 .logo:hover{letter-spacing:8px}
 .logo span{color:var(--gold)}
-.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links{display:flex;gap:32px;list-style:none}
 .nav-links a{color:var(--cream);text-decoration:none;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:.6;transition:opacity .3s;position:relative;padding-bottom:4px}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:-100%;width:100%;height:1px;background:var(--gold);transition:left .4s cubic-bezier(.16,1,.3,1)}
 .nav-links a:hover{opacity:1}.nav-links a:hover::after{left:0}
-.nav-call{border:1px solid var(--gold);color:var(--gold);padding:10px 24px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;position:relative;overflow:hidden;transition:transform .2s}
+.nav-call{border:1px solid var(--gold);color:var(--gold);padding:9px 22px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;position:relative;overflow:hidden}
 .nav-call::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
-.nav-call-t{position:relative;z-index:1;transition:color .35s}
+.nc-t{position:relative;z-index:1;transition:color .35s;display:block}
 .nav-call:hover::before{transform:scaleX(1)}
-.nav-call:hover .nav-call-t{color:var(--black)}
+.nav-call:hover .nc-t{color:var(--black)}
+/* hamburger mobile */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:600}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--cream);transition:all .35s cubic-bezier(.16,1,.3,1)}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+/* mobile drawer */
+.mobile-menu{position:fixed;inset:0;background:rgba(8,8,8,.98);backdrop-filter:blur(20px);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transform:translateY(-100%);transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,8vw,52px);letter-spacing:4px;color:var(--white);text-decoration:none;transition:color .3s}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-menu .m-call{color:var(--gold);border:1px solid var(--gold);padding:14px 36px;font-size:16px;letter-spacing:3px;margin-top:16px;display:block}
 
-/* MARQUEE */
-.mq{background:var(--gold);padding:11px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:10}
-.mq-inner{display:inline-flex;animation:mq 22s linear infinite}
-.mq-inner:hover{animation-play-state:paused}
-.mq-item{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:var(--black);padding:0 36px;display:inline-flex;align-items:center;gap:14px}
-.mq-dot{width:4px;height:4px;border-radius:50%;background:rgba(0,0,0,.35)}
-@keyframes mq{to{transform:translateX(-50%)}}
-
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 52px}
-.hero-bg{position:absolute;inset:0;z-index:0;
-  background:radial-gradient(ellipse 60% 65% at 50% 50%,rgba(201,168,76,.07) 0%,transparent 70%),
-             radial-gradient(ellipse 25% 25% at 5% 92%,rgba(201,168,76,.05) 0%,transparent 60%)}
-.hero-grid{position:absolute;inset:0;z-index:0;
-  background-image:linear-gradient(rgba(201,168,76,.034) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.034) 1px,transparent 1px);
-  background-size:65px 65px;
-  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 20%,transparent 100%)}
-.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.35;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
-  animation:grain 2.5s steps(3) infinite}
-@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-2%,-3%)}66%{transform:translate(3%,1%)}100%{transform:translate(-1%,2%)}}
-.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
-.orb1{width:450px;height:450px;background:rgba(201,168,76,.055);top:-120px;right:8%;animation:ofl 9s ease-in-out infinite}
-.orb2{width:300px;height:300px;background:rgba(201,168,76,.04);bottom:8%;left:3%;animation:ofl 12s ease-in-out infinite reverse}
-@keyframes ofl{0%,100%{transform:translateY(0)}50%{transform:translateY(-35px)}}
-.hero-content{position:relative;z-index:2;max-width:860px}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:24px;opacity:0;animation:up .8s .35s cubic-bezier(.16,1,.3,1) forwards}
-.hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold)}
-.hero-eyebrow span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500}
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;padding:100px 48px 60px}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 60% at 28% 55%,rgba(201,168,76,.07) 0%,transparent 68%)}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(201,168,76,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.03) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 85% 85% at 40% 50%,black 20%,transparent 100%)}
+.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.28;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");animation:grain 2.5s steps(3) infinite}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-2%,-2%)}66%{transform:translate(2%,1%)}100%{transform:translate(-1%,2%)}}
+.orb-hero{position:absolute;width:480px;height:480px;background:rgba(201,168,76,.05);border-radius:50%;filter:blur(100px);top:-150px;left:-80px;pointer-events:none;z-index:0;animation:ofl 10s ease-in-out infinite}
+@keyframes ofl{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+/* left */
+.hero-left{position:relative;z-index:2}
+.h-eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:22px;opacity:0;animation:up .8s .35s cubic-bezier(.16,1,.3,1) forwards}
+.h-eyebrow::before{content:'';width:34px;height:1px;background:var(--gold)}
+.h-eyebrow span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500}
 .hl{overflow:hidden;display:block}
 .hw{display:block;opacity:0;transform:translateY(108%);animation:slideUp .95s cubic-bezier(.16,1,.3,1) forwards}
-.hw:nth-child(1){animation-delay:.05s}
-.hw:nth-child(2){animation-delay:.2s}
+.hw:nth-child(1){animation-delay:.04s}.hw:nth-child(2){animation-delay:.18s}
 @keyframes slideUp{to{opacity:1;transform:translateY(0)}}
-h1.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,13vw,175px);line-height:.87;color:var(--white);letter-spacing:-2px}
-h1.hero-title .outline{font-style:italic;font-family:'Playfair Display',serif;color:transparent;-webkit-text-stroke:1.5px var(--gold);display:block}
-.hero-sub{font-size:15px;line-height:1.85;color:var(--muted);max-width:390px;margin-top:28px;margin-bottom:44px;opacity:0;animation:up .8s .72s forwards}
-.hero-btns{display:flex;align-items:center;gap:28px;opacity:0;animation:up .8s .88s forwards}
 @keyframes up{to{opacity:1;transform:none}}
-.btn-gold{background:var(--gold);color:var(--black);padding:16px 40px;text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500;display:inline-block;position:relative;overflow:hidden}
+h1.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,9.5vw,148px);line-height:.87;color:var(--white);letter-spacing:-2px}
+h1.hero-title .outline{font-style:italic;font-family:'Playfair Display',serif;color:transparent;-webkit-text-stroke:1.5px var(--gold);display:block}
+.hero-sub{font-size:14px;line-height:1.9;color:var(--muted);max-width:370px;margin-top:24px;margin-bottom:38px;opacity:0;animation:up .8s .72s forwards}
+.hero-btns{display:flex;align-items:center;gap:22px;opacity:0;animation:up .8s .88s forwards}
+.btn-gold{background:var(--gold);color:var(--black);padding:14px 34px;text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500;display:inline-block;position:relative;overflow:hidden}
 .btn-gold::before{content:'';position:absolute;inset:0;background:var(--gold2);transform:translateX(-100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
 .btn-gold:hover::before{transform:translateX(0)}
 .btn-gold .bt{position:relative;z-index:1}
 .btn-ghost{color:var(--cream);text-decoration:none;font-size:12px;letter-spacing:1px;opacity:.5;transition:opacity .3s;display:flex;align-items:center;gap:8px}
 .btn-ghost:hover{opacity:1}
 .arr{display:inline-block;transition:transform .35s}
-.btn-ghost:hover .arr{transform:translateX(6px)}
-.hero-loc{position:absolute;bottom:36px;left:52px;display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);z-index:2;opacity:0;animation:up .8s 1.1s forwards}
-.hero-scroll{position:absolute;bottom:36px;right:52px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:up .8s 1.2s forwards}
-.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);animation:spl 2s ease-in-out infinite}
-@keyframes spl{0%,100%{opacity:.3}50%{opacity:1}}
-.scroll-txt{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
-.hero-deco{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(180px,24vw,360px);color:rgba(201,168,76,.034);line-height:1;pointer-events:none;z-index:1;letter-spacing:-4px}
+.btn-ghost:hover .arr{transform:translateX(5px)}
+.hero-loc{margin-top:36px;display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:0;animation:up .8s 1.1s forwards}
+/* mobile stats strip (hidden on desktop) */
+.mobile-stats{display:none;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:32px;opacity:0;animation:up .8s 1.2s forwards}
+.mst{background:rgba(201,168,76,.07);border:1px solid var(--border);padding:14px 8px;text-align:center}
+.mst-n{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);line-height:1}
+.mst-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
 
-/* STATS */
+/* ══ HERO RIGHT — PREMIUM 3D CARD ══ */
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;opacity:0;animation:up 1.1s .55s cubic-bezier(.16,1,.3,1) forwards}
+/* glow behind */
+.card-glow{position:absolute;width:300px;height:300px;background:rgba(201,168,76,.12);border-radius:50%;filter:blur(70px);animation:ofl 7s ease-in-out infinite}
+/* 3D card wrapper */
+.card-3d{perspective:1000px;width:340px;height:480px}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .08s linear;border-radius:2px}
+.prem-card{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#111111 0%,#1a1a1a 40%,#131313 70%,#111 100%);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:2px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:36px 32px;
+}
+/* shimmer sweep */
+.card-shimmer{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,76,.07),transparent);animation:shimmerPass 4s 2s ease-in-out infinite;transform:skewX(-15deg)}
+@keyframes shimmerPass{0%{left:-100%}40%,100%{left:160%}}
+/* gold top edge */
+.prem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+/* diagonal stripe watermark */
+.card-stripe{position:absolute;top:0;right:0;bottom:0;width:90px;background:repeating-linear-gradient(135deg,rgba(201,168,76,.025) 0,rgba(201,168,76,.025) 2px,transparent 2px,transparent 12px)}
+/* card top */
+.card-top{position:relative;z-index:1}
+.card-chip{width:38px;height:28px;border:1px solid rgba(201,168,76,.4);border-radius:4px;margin-bottom:24px;position:relative;overflow:hidden}
+.card-chip::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(201,168,76,.3)}
+.card-chip::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(201,168,76,.3)}
+.card-name{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:5px;color:var(--white);line-height:1;margin-bottom:4px}
+.card-name span{color:var(--gold)}
+.card-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--muted)}
+/* big scissors watermark */
+.card-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;opacity:.04;pointer-events:none;line-height:1;animation:scWm 8s ease-in-out infinite}
+@keyframes scWm{0%,100%{transform:translate(-50%,-50%) rotate(-5deg)}50%{transform:translate(-50%,-50%) rotate(5deg)}}
+/* stats grid in card */
+.card-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);position:relative;z-index:1;margin:0 -32px}
+.cs{background:rgba(8,8,8,.6);padding:16px 20px;text-align:center}
+.cs-n{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);letter-spacing:2px;line-height:1}
+.cs-l{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+/* card bottom */
+.card-bottom{position:relative;z-index:1}
+.card-loc{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:.5px}
+.card-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);padding:7px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:#4caf50;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.card-num{margin-top:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;color:rgba(201,168,76,.4);letter-spacing:3px}
+/* floating badges outside card */
+.f-badge{position:absolute;background:rgba(14,14,14,.95);border:1px solid var(--border);padding:10px 16px;white-space:nowrap;backdrop-filter:blur(10px);z-index:3}
+.f-badge strong{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:2px;display:block;line-height:1}
+.f-badge span{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.fb1{top:-20px;right:-24px;animation:fbFloat 6s ease-in-out infinite}
+.fb2{bottom:-20px;left:-30px;animation:fbFloat 7s 1.2s ease-in-out infinite reverse}
+@keyframes fbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+/* vertical service ticker on card left edge */
+.card-ticker{position:absolute;left:-110px;top:50%;transform:translateY(-50%);width:100px;overflow:hidden;height:200px}
+.ticker-inner{display:flex;flex-direction:column;gap:12px;animation:tickerUp 12s linear infinite}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tickerUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+.ticker-item{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.35);white-space:nowrap;text-align:right}
+.ticker-item.hl-t{color:rgba(201,168,76,.7)}
+
+/* ══ STATS ══ */
 .stats-row{background:var(--dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr)}
-.st{padding:34px 28px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .4s}
+.st{padding:30px 20px;text-align:center;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .4s}
 .st:last-child{border-right:none}
 .st::before{content:'';position:absolute;inset:0;background:rgba(201,168,76,.035);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .st:hover::before{transform:scaleY(1)}
-.st-num{font-family:'Bebas Neue',sans-serif;font-size:50px;color:var(--gold);letter-spacing:2px;line-height:1;position:relative}
-.st-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:5px;position:relative}
+.st-n{font-family:'Bebas Neue',sans-serif;font-size:46px;color:var(--gold);letter-spacing:2px;line-height:1;position:relative}
+.st-l{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:4px;position:relative}
 
-/* SHARED */
-section{padding:96px 52px;position:relative}
-.s-tag{display:inline-flex;align-items:center;gap:12px;margin-bottom:14px}
-.s-tag::before{content:'';width:28px;height:1px;background:var(--gold);transition:width .5s}
-.s-tag:hover::before{width:48px}
+/* ══ SHARED ══ */
+section{padding:90px 48px;position:relative}
+.s-tag{display:inline-flex;align-items:center;gap:12px;margin-bottom:13px}
+.s-tag::before{content:'';width:26px;height:1px;background:var(--gold);transition:width .5s}
+.s-tag:hover::before{width:46px}
 .s-tag span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500}
-.s-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5.5vw,76px);line-height:.92;color:var(--white);letter-spacing:-1px}
+.s-h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,5vw,72px);line-height:.92;color:var(--white);letter-spacing:-1px}
 .s-h2 em{font-style:italic;font-family:'Playfair Display',serif;color:var(--gold)}
-.tl{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:26px 0}
+.tl{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:24px 0}
 
-/* ABOUT */
+/* ══ ABOUT ══ */
 .about{background:var(--dark)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;margin-top:52px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;margin-top:48px}
 .about-img{aspect-ratio:4/5;position:relative;overflow:hidden}
 .about-img-inner{width:100%;height:100%;background:linear-gradient(135deg,#111,#1c1c1c);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .8s cubic-bezier(.16,1,.3,1)}
 .about-img:hover .about-img-inner{transform:scale(1.03)}
-.about-img::before{content:'';position:absolute;top:16px;left:16px;right:-16px;bottom:-16px;border:1px solid var(--border);z-index:-1;transition:all .5s cubic-bezier(.16,1,.3,1)}
-.about-img:hover::before{top:10px;left:10px;right:-10px;bottom:-10px}
-.about-img::after{content:'';position:absolute;top:0;left:0;width:36px;height:36px;border-top:2px solid var(--gold);border-left:2px solid var(--gold);transition:width .4s,height .4s}
-.about-img:hover::after{width:72px;height:72px}
-.about-text p{font-size:15px;line-height:1.9;color:var(--muted);margin-bottom:16px}
+.about-img::before{content:'';position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;border:1px solid var(--border);z-index:-1;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.about-img:hover::before{top:9px;left:9px;right:-9px;bottom:-9px}
+.corner{position:absolute;width:32px;height:32px;transition:all .4s}
+.ctlx{top:0;left:0;border-top:2px solid var(--gold);border-left:2px solid var(--gold)}
+.cbrx{bottom:0;right:0;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold)}
+.about-img:hover .ctlx,.about-img:hover .cbrx{width:64px;height:64px}
+.about-text p{font-size:14px;line-height:1.95;color:var(--muted);margin-bottom:15px}
 .about-text p strong{color:var(--cream);font-weight:500}
-.about-facts{display:flex;gap:40px;padding-top:30px;border-top:1px solid var(--border)}
-.fact-num{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--gold);line-height:1}
-.fact-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.about-facts{display:flex;gap:38px;padding-top:28px;border-top:1px solid var(--border)}
+.fact-n{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1}
+.fact-l{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
 
-/* SERVICES */
-.svc-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:18px}
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.svc{background:var(--card);padding:34px 28px;border:1px solid var(--border);position:relative;overflow:hidden;transition:background .4s,transform .35s,box-shadow .4s;cursor:default;transform-style:preserve-3d}
-.svc:hover{background:#1a1a1a;transform:translateY(-5px);box-shadow:0 20px 55px rgba(201,168,76,.07)}
-.svc::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transition:left .65s cubic-bezier(.16,1,.3,1)}
-.svc:hover::before{left:100%}
-.svc::after{content:'';position:absolute;left:0;top:0;width:2px;height:0;background:linear-gradient(to bottom,var(--gold),transparent);transition:height .5s cubic-bezier(.16,1,.3,1)}
-.svc:hover::after{height:100%}
-.svc-n{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);opacity:.38;margin-bottom:16px}
-.svc-icon{font-size:26px;margin-bottom:12px;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.svc:hover .svc-icon{transform:scale(1.25) rotate(-8deg)}
-.svc-name{font-family:'Playfair Display',serif;font-size:19px;color:var(--white);margin-bottom:10px}
-.svc-desc{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:22px}
-.svc-price{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);letter-spacing:1px}
-.svc-price sup{font-size:14px;vertical-align:super}
+/* ══ SERVICES ══ */
+.svc-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.svc-list{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border)}
+.svc-row{display:flex;align-items:center;justify-content:space-between;padding:18px 26px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .32s;cursor:default}
+.svc-row:nth-child(even){border-right:none}
+.svc-row::before{content:'';position:absolute;left:0;top:0;width:2px;height:0;background:var(--gold);transition:height .4s cubic-bezier(.16,1,.3,1)}
+.svc-row:hover::before{height:100%}
+.svc-row::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,76,.04),transparent);transition:left .55s cubic-bezier(.16,1,.3,1)}
+.svc-row:hover::after{left:100%}
+.svc-row:hover{background:rgba(201,168,76,.04)}
+.svc-left{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.svc-num{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);opacity:.38;width:22px;flex-shrink:0}
+.svc-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--white);transition:color .3s}
+.svc-row:hover .svc-name{color:var(--gold2)}
+.svc-price{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px;flex-shrink:0;position:relative;z-index:1}
+.svc-price sup{font-size:12px;vertical-align:super}
 
-/* TEAM */
+/* ══ TEAM ══ */
 .team{background:var(--dark)}
-.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:44px}
 .bcard{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer}
 .bcard-bg{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .7s cubic-bezier(.16,1,.3,1)}
 .bcard:hover .bcard-bg{transform:scale(1.08)}
-.bcard-emoji{font-size:62px;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.bcard-emoji{font-size:60px;transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .bcard:hover .bcard-emoji{transform:scale(1.18) translateY(-10px)}
-.bcard-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.97) 0%,rgba(8,8,8,.35) 52%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px}
-.bcard::before{content:'';position:absolute;inset:0;background:linear-gradient(130deg,transparent 40%,rgba(201,168,76,.065) 50%,transparent 60%);transform:translateX(-120%);transition:transform .75s;z-index:2}
+.bcard-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.97) 0%,rgba(8,8,8,.35) 52%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:22px 18px}
+.bcard::before{content:'';position:absolute;inset:0;background:linear-gradient(130deg,transparent 40%,rgba(201,168,76,.06) 50%,transparent 60%);transform:translateX(-120%);transition:transform .75s;z-index:2}
 .bcard:hover::before{transform:translateX(120%)}
 .bcard::after{content:'';position:absolute;inset:0;border:0px solid var(--gold);transition:border-width .4s cubic-bezier(.16,1,.3,1);z-index:3}
 .bcard:hover::after{border-width:2px}
-.bcard-name{font-family:'Playfair Display',serif;font-size:18px;color:var(--white);margin-bottom:3px;transform:translateY(6px);transition:transform .4s}
+.bcard-name{font-family:'Playfair Display',serif;font-size:17px;color:var(--white);margin-bottom:3px;transform:translateY(6px);transition:transform .4s}
 .bcard:hover .bcard-name{transform:translateY(0)}
 .bcard-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
 .bcard-bio{font-size:12px;color:var(--muted);line-height:1.6;margin-top:7px;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s .1s}
 .bcard:hover .bcard-bio{max-height:80px;opacity:1}
 
-/* GALLERY */
-.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:200px 200px;gap:3px;margin-top:48px}
-.gi{position:relative;overflow:hidden;background:var(--card);display:flex;align-items:center;justify-content:center}
-.gi:nth-child(1){grid-column:span 2;grid-row:span 2}
+/* ══ GALLERY — FIXED UNIFORM GRID ══ */
+.gal-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:280px 280px;
+  gap:3px;margin-top:44px;
+}
+.gi{position:relative;overflow:hidden;background:var(--card)}
+/* big featured */
+.gi:nth-child(1){grid-row:span 2}
+/* wide bottom */
 .gi:nth-child(4){grid-column:span 2}
-.gi-in{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;transition:transform .65s cubic-bezier(.16,1,.3,1);background:linear-gradient(135deg,#111,#1a1a1a)}
-.gi:nth-child(1) .gi-in{font-size:80px}
-.gi:hover .gi-in{transform:scale(1.1)}
+.gi-in{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;transition:transform .65s cubic-bezier(.16,1,.3,1);background:linear-gradient(135deg,#111,#1c1c1c)}
+.gi:nth-child(1) .gi-in{font-size:90px}
+.gi:hover .gi-in{transform:scale(1.08)}
 .gi-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
-.gi-ov::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,.76);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.gi-ov::before{content:'';position:absolute;inset:0;background:rgba(8,8,8,.75);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.16,1,.3,1)}
 .gi:hover .gi-ov::before{transform:scaleY(1)}
 .gi-label{position:relative;z-index:1;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(10px);transition:opacity .35s .2s,transform .35s .2s}
-.gi-ln{position:relative;z-index:1;width:28px;height:1px;background:var(--gold);opacity:0;transition:opacity .35s .3s,width .35s .3s}
+.gi-ln{position:relative;z-index:1;width:26px;height:1px;background:var(--gold);opacity:0;transition:opacity .35s .3s,width .35s .3s}
 .gi:hover .gi-label,.gi:hover .gi-ln{opacity:1;transform:none}
-.gi:hover .gi-ln{width:48px}
+.gi:hover .gi-ln{width:44px}
 
-/* TESTIMONIALS */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
-.tc{background:var(--card);padding:32px 26px;border:1px solid var(--border);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s;position:relative;overflow:hidden}
+/* ══ TESTIMONIALS ══ */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px}
+.tc{background:var(--card);padding:30px 24px;border:1px solid var(--border);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s;position:relative;overflow:hidden}
 .tc:hover{transform:translateY(-6px);box-shadow:0 22px 55px rgba(201,168,76,.07);border-color:rgba(201,168,76,.33)}
-.tc::before{content:'"';position:absolute;top:-18px;right:18px;font-family:'Playfair Display',serif;font-size:110px;color:rgba(201,168,76,.045);line-height:1;pointer-events:none}
-.tc-stars{color:var(--gold);font-size:12px;margin-bottom:14px;letter-spacing:3px}
-.tc-text{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;line-height:1.8;color:var(--cream);margin-bottom:22px;position:relative}
-.tc-author{display:flex;align-items:center;gap:12px}
-.tc-av{width:42px;height:42px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:16px;color:var(--black);flex-shrink:0;transition:transform .35s}
+.tc::before{content:'"';position:absolute;top:-18px;right:16px;font-family:'Playfair Display',serif;font-size:100px;color:rgba(201,168,76,.04);line-height:1;pointer-events:none}
+.tc-stars{color:var(--gold);font-size:12px;margin-bottom:13px;letter-spacing:3px}
+.tc-text{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;line-height:1.8;color:var(--cream);margin-bottom:20px;position:relative}
+.tc-author{display:flex;align-items:center;gap:11px}
+.tc-av{width:40px;height:40px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:15px;color:var(--black);flex-shrink:0;transition:transform .35s}
 .tc:hover .tc-av{transform:scale(1.1) rotate(6deg)}
-.tc-name{font-size:14px;font-weight:500;color:var(--white)}
+.tc-name{font-size:13px;font-weight:500;color:var(--white)}
 .tc-role{font-size:10px;color:var(--muted);margin-top:2px}
 
-/* BOOKING */
-.booking{background:var(--gold);padding:96px 52px;text-align:center;position:relative;overflow:hidden}
-.booking::before{content:'CALL NOW';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:min(22vw,260px);color:rgba(0,0,0,.055);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
-.bk-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,0,0,.07);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringExp 4s ease-out infinite;width:180px;height:180px}
-.bk-ring:nth-child(2){animation-delay:1.4s}
-.bk-ring:nth-child(3){animation-delay:2.8s}
-@keyframes ringExp{0%{width:180px;height:180px;opacity:.35}100%{width:720px;height:720px;opacity:0}}
-.booking-content{position:relative;z-index:1}
-.booking h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,9vw,115px);color:var(--black);line-height:.88;letter-spacing:-2px;margin-bottom:14px}
-.booking h2 em{font-style:italic;font-family:'Playfair Display',serif}
-.booking p{color:rgba(0,0,0,.5);font-size:14px;margin-bottom:34px;letter-spacing:.4px}
-.btn-call{display:inline-flex;flex-direction:column;align-items:center;background:var(--black);color:var(--gold);padding:18px 50px;text-decoration:none;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+/* ══ BOOKING ══ */
+.booking{background:var(--gold);padding:90px 48px;text-align:center;position:relative;overflow:hidden}
+.booking::before{content:'CALL NOW';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:min(20vw,240px);color:rgba(0,0,0,.055);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.bk-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,0,0,.07);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringExp 4s ease-out infinite;width:160px;height:160px}
+.bk-ring:nth-child(2){animation-delay:1.4s}.bk-ring:nth-child(3){animation-delay:2.8s}
+@keyframes ringExp{0%{width:160px;height:160px;opacity:.35}100%{width:680px;height:680px;opacity:0}}
+.bk-content{position:relative;z-index:1}
+.bk-content h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,8vw,108px);color:var(--black);line-height:.88;letter-spacing:-2px;margin-bottom:13px}
+.bk-content h2 em{font-style:italic;font-family:'Playfair Display',serif}
+.bk-content p{color:rgba(0,0,0,.5);font-size:14px;margin-bottom:30px;letter-spacing:.4px}
+.btn-call{display:inline-flex;flex-direction:column;align-items:center;background:var(--black);color:var(--gold);padding:17px 48px;text-decoration:none;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
 .btn-call::before{content:'';position:absolute;inset:0;background:#1a1a1a;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
-.btn-call:hover{transform:translateY(-3px);box-shadow:0 18px 55px rgba(0,0,0,.3)}
+.btn-call:hover{transform:translateY(-3px);box-shadow:0 18px 50px rgba(0,0,0,.3)}
 .btn-call:hover::before{transform:scaleX(1)}
-.btn-call-main{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;position:relative;z-index:1}
+.btn-call-main{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:4px;position:relative;z-index:1}
 .btn-call-num{font-size:12px;letter-spacing:2px;color:rgba(201,168,76,.6);margin-top:3px;position:relative;z-index:1}
-.booking-hours{margin-top:22px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.38);position:relative}
+.bk-hours{margin-top:20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.38);position:relative}
 
-/* FOOTER */
-footer{background:var(--black);border-top:1px solid var(--border);padding:66px 52px 30px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:56px;padding-bottom:44px;border-bottom:1px solid var(--border)}
-.f-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:5px;color:var(--white);display:block;margin-bottom:12px;text-decoration:none;transition:letter-spacing .4s}
+/* ══ FOOTER ══ */
+footer{background:var(--black);border-top:1px solid var(--border);padding:60px 48px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:52px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--white);display:block;margin-bottom:11px;text-decoration:none;transition:letter-spacing .4s}
 .f-logo:hover{letter-spacing:8px}
 .f-logo span{color:var(--gold)}
 .f-desc{font-size:13px;color:var(--muted);line-height:1.8}
-.f-address{margin-top:18px;font-size:13px;color:var(--muted);line-height:2}
-.f-address strong{color:var(--cream);font-weight:500;display:block}
-.f-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:500}
+.f-addr{margin-top:16px;font-size:13px;color:var(--muted);line-height:2}
+.f-addr strong{color:var(--cream);font-weight:500;display:block}
+.f-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
 .f-col ul{list-style:none}
-.f-col ul li{margin-bottom:10px}
+.f-col ul li{margin-bottom:9px}
 .f-col ul a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .3s,padding-left .3s;display:block}
 .f-col ul a:hover{color:var(--cream);padding-left:6px}
-.footer-bot{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:11px;color:var(--muted)}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;padding-top:24px;font-size:11px;color:var(--muted)}
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+/* ══ REVEAL ══ */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .72s cubic-bezier(.16,1,.3,1),transform .72s cubic-bezier(.16,1,.3,1)}
 .rv.on{opacity:1;transform:none}
-.rv2{opacity:0;transform:translateY(26px);transition:opacity .75s .15s cubic-bezier(.16,1,.3,1),transform .75s .15s cubic-bezier(.16,1,.3,1)}
+.rv2{opacity:0;transform:translateY(24px);transition:opacity .72s .14s cubic-bezier(.16,1,.3,1),transform .72s .14s cubic-bezier(.16,1,.3,1)}
 .rv2.on{opacity:1;transform:none}
 
-/* MOBILE */
-@media(max-width:768px){
-  nav{padding:15px 20px}.nav-links,.nav-call{display:none}
-  section{padding:66px 20px}.hero{padding:0 20px}
-  .hero-loc,.hero-scroll,.hero-deco{display:none}
-  .about-grid,.svc-grid,.testi-grid,.footer-grid{grid-template-columns:1fr}
+/* ══ MOBILE ══ */
+@media(max-width:900px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .nav-call{display:none}
+  .hamburger{display:flex}
+  .hero{grid-template-columns:1fr;padding:100px 20px 50px;gap:0}
+  .hero-right{display:none}
+  .mobile-stats{display:grid}
+  section{padding:60px 20px}
+  .about-grid,.footer-grid{grid-template-columns:1fr}
+  .about-img{aspect-ratio:3/2}
   .team-grid{grid-template-columns:1fr 1fr}
-  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,140px)}
-  .gi:nth-child(1){grid-column:span 2;grid-row:span 1}
-  .gi:nth-child(4){grid-column:span 1}
+  .svc-list{grid-template-columns:1fr}
+  .svc-row{border-right:none}
+  .svc-row:nth-child(even){border-right:none}
+  .testi-grid{grid-template-columns:1fr}
+  /* GALLERY MOBILE — uniform 2 col */
+  .gal-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(4,180px);
+  }
+  .gi:nth-child(1){grid-row:span 2;grid-column:span 1}
+  .gi:nth-child(4){grid-column:span 2;grid-row:span 1}
   .stats-row{grid-template-columns:1fr 1fr}
   .st{border-bottom:1px solid var(--border)}
-  .booking{padding:66px 20px}
-  .footer-bot{flex-direction:column;gap:10px;text-align:center}
+  .booking{padding:60px 20px}
+  .footer-bot{flex-direction:column;gap:9px;text-align:center}
+  h1.hero-title{font-size:clamp(70px,16vw,110px)}
+}
+@media(max-width:480px){
+  .testi-grid{grid-template-columns:1fr}
+  .about-facts{gap:22px}
+  .mobile-stats{grid-template-columns:repeat(2,1fr)}
+  .gal-grid{grid-template-rows:repeat(4,150px)}
 }
 </style>
 </head>
@@ -263,15 +357,27 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-text">
-    <span style="animation-delay:.05s">B</span><span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">R</span><span style="animation-delay:.2s">B</span><span style="animation-delay:.25s">E</span><span style="animation-delay:.3s">R</span><span style="margin:0 8px;animation-delay:.35s">·</span><span style="animation-delay:.4s">N</span><span style="animation-delay:.45s">A</span><span style="animation-delay:.5s">T</span><span style="animation-delay:.55s">I</span><span style="animation-delay:.6s">O</span><span style="animation-delay:.65s">N</span>
+  <div class="ld-logo">
+    <span style="animation-delay:.04s">B</span><span style="animation-delay:.09s">A</span><span style="animation-delay:.14s">R</span><span style="animation-delay:.19s">B</span><span style="animation-delay:.24s">E</span><span style="animation-delay:.29s">R</span><span style="margin:0 10px;animation-delay:.34s;color:#C9A84C">·</span><span style="animation-delay:.39s">N</span><span style="animation-delay:.44s">A</span><span style="animation-delay:.49s">T</span><span style="animation-delay:.54s">I</span><span style="animation-delay:.59s">O</span><span style="animation-delay:.64s">N</span>
   </div>
-  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="ld-row"><div class="ld-line"></div><div class="ld-icon">✂️</div><div class="ld-line r"></div></div>
+  <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
+  <div class="ld-tag">Laliguras Tole · Pokhara · Est. 2018</div>
 </div>
 
-<!-- CURSOR + TRAILS -->
+<!-- CURSOR -->
 <div class="cur" id="cur"></div>
 <div class="cur-r" id="curR"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="m-link">About</a>
+  <a href="#services" class="m-link">Services</a>
+  <a href="#team" class="m-link">Team</a>
+  <a href="#gallery" class="m-link">Gallery</a>
+  <a href="#testimonials" class="m-link">Reviews</a>
+  <a href="tel:9805825193" class="m-call">📞 9805825193</a>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -283,39 +389,22 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#testimonials">Reviews</a></li>
   </ul>
-  <a href="tel:9805825193" class="nav-call"><span class="nav-call-t">📞 Call Now</span></a>
+  <a href="tel:9805825193" class="nav-call"><span class="nc-t">📞 Call Now</span></a>
+  <button class="hamburger" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-
-<!-- MARQUEE -->
-<div class="mq">
-  <div class="mq-inner">
-    <span class="mq-item">Barber Nation<span class="mq-dot"></span></span>
-    <span class="mq-item">Pokhara's Finest<span class="mq-dot"></span></span>
-    <span class="mq-item">Premium Cuts<span class="mq-dot"></span></span>
-    <span class="mq-item">Laliguras Tole<span class="mq-dot"></span></span>
-    <span class="mq-item">Call 9805825193<span class="mq-dot"></span></span>
-    <span class="mq-item">Open Daily<span class="mq-dot"></span></span>
-    <span class="mq-item">Est. 2018<span class="mq-dot"></span></span>
-    <span class="mq-item">Barber Nation<span class="mq-dot"></span></span>
-    <span class="mq-item">Pokhara's Finest<span class="mq-dot"></span></span>
-    <span class="mq-item">Premium Cuts<span class="mq-dot"></span></span>
-    <span class="mq-item">Laliguras Tole<span class="mq-dot"></span></span>
-    <span class="mq-item">Call 9805825193<span class="mq-dot"></span></span>
-    <span class="mq-item">Open Daily<span class="mq-dot"></span></span>
-    <span class="mq-item">Est. 2018<span class="mq-dot"></span></span>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="grain"></div>
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="hero-deco">BN</div>
-  <div class="hero-content">
-    <div class="hero-eyebrow"><span>Laliguras Tole · Pokhara-12 · Est. 2018</span></div>
+  <div class="orb-hero"></div>
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="h-eyebrow"><span>Laliguras Tole · Pokhara-12 · Est. 2018</span></div>
     <h1 class="hero-title">
       <span class="hl"><span class="hw">Barber</span></span>
       <span class="hl"><span class="hw outline">Nation</span></span>
@@ -323,22 +412,91 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
     <p class="hero-sub">Where every cut tells a story. Step in, sit back, and walk out as the sharpest version of yourself.</p>
     <div class="hero-btns">
       <a href="tel:9805825193" class="btn-gold"><span class="bt">📞 Book via Call</span></a>
-      <a href="#services" class="btn-ghost">See Services <span class="arr">→</span></a>
+      <a href="#services" class="btn-ghost">Our Services <span class="arr">→</span></a>
+    </div>
+    <div class="hero-loc">📍 Laliguras Tole, Pokhara-12</div>
+
+    <!-- MOBILE STATS (only visible on mobile) -->
+    <div class="mobile-stats">
+      <div class="mst"><div class="mst-n">5K+</div><div class="mst-l">Clients</div></div>
+      <div class="mst"><div class="mst-n">6+</div><div class="mst-l">Years</div></div>
+      <div class="mst"><div class="mst-n">4</div><div class="mst-l">Barbers</div></div>
+      <div class="mst"><div class="mst-n">4.9★</div><div class="mst-l">Rating</div></div>
     </div>
   </div>
-  <div class="hero-loc">📍 Laliguras Tole, Pokhara-12</div>
-  <div class="hero-scroll">
-    <span class="scroll-txt">Scroll</span>
-    <div class="scroll-line"></div>
+
+  <!-- RIGHT — PREMIUM 3D CARD -->
+  <div class="hero-right" id="heroRight">
+    <div class="card-glow"></div>
+
+    <!-- Vertical service ticker -->
+    <div class="card-ticker">
+      <div class="ticker-inner">
+        <div class="ticker-item hl-t">Signature Cut</div>
+        <div class="ticker-item">Hot Towel Shave</div>
+        <div class="ticker-item hl-t">Beard Sculpt</div>
+        <div class="ticker-item">Fade & Shape-Up</div>
+        <div class="ticker-item hl-t">Full Package</div>
+        <div class="ticker-item">Hair Colour</div>
+        <div class="ticker-item hl-t">Head Massage</div>
+        <div class="ticker-item">Kids Haircut</div>
+        <!-- duplicate for seamless -->
+        <div class="ticker-item hl-t">Signature Cut</div>
+        <div class="ticker-item">Hot Towel Shave</div>
+        <div class="ticker-item hl-t">Beard Sculpt</div>
+        <div class="ticker-item">Fade & Shape-Up</div>
+        <div class="ticker-item hl-t">Full Package</div>
+        <div class="ticker-item">Hair Colour</div>
+        <div class="ticker-item hl-t">Head Massage</div>
+        <div class="ticker-item">Kids Haircut</div>
+      </div>
+    </div>
+
+    <!-- Floating badges -->
+    <div class="f-badge fb1"><strong>4.9★</strong><span>Top Rated</span></div>
+    <div class="f-badge fb2"><strong>5K+</strong><span>Happy Clients</span></div>
+
+    <!-- 3D Card -->
+    <div class="card-3d" id="card3d">
+      <div class="card-inner" id="cardInner">
+        <div class="prem-card">
+          <div class="card-shimmer"></div>
+          <div class="card-stripe"></div>
+          <div class="card-watermark">✂</div>
+
+          <div class="card-top">
+            <div class="card-chip"></div>
+            <div class="card-name">BARBER<br><span>NATION</span></div>
+            <div class="card-tagline">Premium Grooming Studio</div>
+          </div>
+
+          <div class="card-stats">
+            <div class="cs"><div class="cs-n">6+</div><div class="cs-l">Years</div></div>
+            <div class="cs"><div class="cs-n">17</div><div class="cs-l">Services</div></div>
+            <div class="cs"><div class="cs-n">4</div><div class="cs-l">Barbers</div></div>
+            <div class="cs"><div class="cs-n">4.9</div><div class="cs-l">Rating</div></div>
+          </div>
+
+          <div class="card-bottom">
+            <div class="card-loc">📍 Laliguras Tole, Pokhara-12</div>
+            <div class="card-badge">
+              <span class="badge-dot"></span>
+              Open Now · 9AM – 8PM
+            </div>
+            <div class="card-num">9805825193</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats-row">
-  <div class="st rv"><div class="st-num" data-target="5000">0</div><div class="st-label">Happy Clients</div></div>
-  <div class="st rv2"><div class="st-num" data-target="6" data-suffix="+">0</div><div class="st-label">Years of Craft</div></div>
-  <div class="st rv"><div class="st-num" data-target="4">0</div><div class="st-label">Expert Barbers</div></div>
-  <div class="st rv2"><div class="st-num" id="ratingNum">4.9★</div><div class="st-label">Avg Rating</div></div>
+  <div class="st rv"><div class="st-n" data-target="5000">0</div><div class="st-l">Happy Clients</div></div>
+  <div class="st rv2"><div class="st-n" data-target="6" data-suffix="+">0</div><div class="st-l">Years of Craft</div></div>
+  <div class="st rv"><div class="st-n" data-target="4">0</div><div class="st-l">Expert Barbers</div></div>
+  <div class="st rv2"><div class="st-n">4.9★</div><div class="st-l">Avg Rating</div></div>
 </div>
 
 <!-- ABOUT -->
@@ -346,10 +504,12 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
   <div class="about-grid">
     <div class="about-img rv">
       <div class="about-img-inner">
-        <div style="font-size:86px;animation:ofl 5s ease-in-out infinite">💈</div>
+        <div style="font-size:80px;animation:ofl 5s ease-in-out infinite">💈</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:5px;color:var(--gold)">BARBER NATION</div>
         <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--muted)">Laliguras Tole, Pokhara</div>
       </div>
+      <div class="corner ctlx"></div>
+      <div class="corner cbrx"></div>
     </div>
     <div class="rv2">
       <div class="s-tag"><span>Our Story</span></div>
@@ -357,13 +517,13 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
       <div class="tl"></div>
       <div class="about-text">
         <p><strong>Barber Nation was born from a simple belief</strong> — every man deserves to feel confident, and a great cut is the fastest way to get there.</p>
-        <p>Tucked in Laliguras Tole, Pokhara, we've built a space where craft meets comfort. No rush, no compromise — just skilled hands and sharp tools doing what they do best.</p>
-        <p><strong>We take pride in every single cut,</strong> whether it's your first visit or your fiftieth. You sit down, we listen, and we deliver a look that's made for you.</p>
+        <p>Tucked in Laliguras Tole, Pokhara, we've built a space where craft meets comfort. No rush, no compromise — just skilled hands doing what they do best.</p>
+        <p><strong>We take pride in every single cut,</strong> whether it's your first visit or your fiftieth. You sit down, we listen, and we deliver a look made for you.</p>
       </div>
       <div class="about-facts">
-        <div><div class="fact-num">6+</div><div class="fact-label">Years of Craft</div></div>
-        <div><div class="fact-num">5K+</div><div class="fact-label">Happy Clients</div></div>
-        <div><div class="fact-num">4</div><div class="fact-label">Expert Barbers</div></div>
+        <div><div class="fact-n">6+</div><div class="fact-l">Years of Craft</div></div>
+        <div><div class="fact-n">5K+</div><div class="fact-l">Happy Clients</div></div>
+        <div><div class="fact-n">4</div><div class="fact-l">Expert Barbers</div></div>
       </div>
     </div>
   </div>
@@ -372,16 +532,30 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
 <!-- SERVICES -->
 <section id="services">
   <div class="svc-header">
-    <div class="rv"><div class="s-tag"><span>What We Offer</span></div><h2 class="s-h2">Our <em>Services</em></h2></div>
-    <p class="rv2" style="color:var(--muted);font-size:13px;max-width:250px;line-height:1.7">Every service includes consultation & hot towel finish.</p>
+    <div class="rv">
+      <div class="s-tag"><span>What We Offer</span></div>
+      <h2 class="s-h2">Our <em>Services</em></h2>
+    </div>
+    <p class="rv2" style="color:var(--muted);font-size:13px;max-width:240px;line-height:1.7">17 premium services. Every visit includes a consultation.</p>
   </div>
-  <div class="svc-grid rv">
-    <div class="svc"><div class="svc-n">01</div><span class="svc-icon">✂️</span><div class="svc-name">Signature Haircut</div><p class="svc-desc">Precision scissor and clipper work tailored to your face shape and personal style.</p><div class="svc-price"><sup>Rs</sup>250</div></div>
-    <div class="svc"><div class="svc-n">02</div><span class="svc-icon">🪒</span><div class="svc-name">Hot Towel Shave</div><p class="svc-desc">Steam, rich lather, and a straight razor for a flawless smooth shave ritual.</p><div class="svc-price"><sup>Rs</sup>300</div></div>
-    <div class="svc"><div class="svc-n">03</div><span class="svc-icon">🧔</span><div class="svc-name">Beard Sculpt</div><p class="svc-desc">Clean lines, perfect symmetry, and a defined shape that frames your face just right.</p><div class="svc-price"><sup>Rs</sup>200</div></div>
-    <div class="svc"><div class="svc-n">04</div><span class="svc-icon">💈</span><div class="svc-name">Cut + Beard Combo</div><p class="svc-desc">Hair and beard treated together for a balanced, complete look that turns heads.</p><div class="svc-price"><sup>Rs</sup>400</div></div>
-    <div class="svc"><div class="svc-n">05</div><span class="svc-icon">⚡</span><div class="svc-name">Fade & Shape-Up</div><p class="svc-desc">Sharp edges, flawless fade gradient — the kind of clean lines that look great every angle.</p><div class="svc-price"><sup>Rs</sup>280</div></div>
-    <div class="svc"><div class="svc-n">06</div><span class="svc-icon">👑</span><div class="svc-name">Full Package</div><p class="svc-desc">Cut, beard, shave and hair wash. The complete experience for when you want the very best.</p><div class="svc-price"><sup>Rs</sup>600</div></div>
+  <div class="svc-list rv">
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">01</span><span class="svc-name">Signature Haircut</span></div><div class="svc-price"><sup>Rs</sup>250</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">02</span><span class="svc-name">Hot Towel Shave</span></div><div class="svc-price"><sup>Rs</sup>300</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">03</span><span class="svc-name">Beard Sculpt</span></div><div class="svc-price"><sup>Rs</sup>200</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">04</span><span class="svc-name">Cut + Beard Combo</span></div><div class="svc-price"><sup>Rs</sup>400</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">05</span><span class="svc-name">Fade & Shape-Up</span></div><div class="svc-price"><sup>Rs</sup>280</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">06</span><span class="svc-name">Full Grooming Package</span></div><div class="svc-price"><sup>Rs</sup>600</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">07</span><span class="svc-name">Hair Wash & Style</span></div><div class="svc-price"><sup>Rs</sup>150</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">08</span><span class="svc-name">Skin Fade</span></div><div class="svc-price"><sup>Rs</sup>300</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">09</span><span class="svc-name">Classic Taper</span></div><div class="svc-price"><sup>Rs</sup>250</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">10</span><span class="svc-name">Kids Haircut</span></div><div class="svc-price"><sup>Rs</sup>180</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">11</span><span class="svc-name">Beard Wash & Condition</span></div><div class="svc-price"><sup>Rs</sup>120</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">12</span><span class="svc-name">Head Massage</span></div><div class="svc-price"><sup>Rs</sup>200</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">13</span><span class="svc-name">Hair Colour</span></div><div class="svc-price"><sup>Rs</sup>500</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">14</span><span class="svc-name">Hair Highlights</span></div><div class="svc-price"><sup>Rs</sup>800</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">15</span><span class="svc-name">Eyebrow Trim</span></div><div class="svc-price"><sup>Rs</sup>100</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">16</span><span class="svc-name">Face Pack & Clean-Up</span></div><div class="svc-price"><sup>Rs</sup>350</div></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">17</span><span class="svc-name">Royal VIP Package</span></div><div class="svc-price"><sup>Rs</sup>900</div></div>
   </div>
 </section>
 
@@ -390,49 +564,49 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
   <div style="text-align:center" class="rv">
     <div class="s-tag" style="justify-content:center"><span>The Crew</span></div>
     <h2 class="s-h2">Meet The <em>Team</em></h2>
-    <p style="color:var(--muted);font-size:14px;margin-top:12px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.7">Hover to meet our barbers — artists in the chair.</p>
+    <p style="color:var(--muted);font-size:14px;margin-top:11px;max-width:320px;margin-left:auto;margin-right:auto;line-height:1.7">Hover to meet our barbers — artists in the chair.</p>
   </div>
   <div class="team-grid rv">
-    <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#111,#1c1c1c)"><div class="bcard-emoji">💈</div></div><div class="bcard-ov"><div class="bcard-name">Sagar Thapa</div><div class="bcard-role">Master Barber · Founder</div><p class="bcard-bio">10+ years of precision cuts. Specialist in fades, tapers, and classic styles.</p></div></div>
+    <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#111,#1c1c1c)"><div class="bcard-emoji">💈</div></div><div class="bcard-ov"><div class="bcard-name">Sagar Thapa</div><div class="bcard-role">Master Barber · Founder</div><p class="bcard-bio">10+ years of precision cuts. Specialist in fades, tapers and classic styles.</p></div></div>
     <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#131313,#1e1e1e)"><div class="bcard-emoji">✂️</div></div><div class="bcard-ov"><div class="bcard-name">Anil Gurung</div><div class="bcard-role">Senior Barber</div><p class="bcard-bio">Beard sculpting expert with a sharp eye for symmetry and clean line-ups.</p></div></div>
     <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#121212,#1d1d1d)"><div class="bcard-emoji">🪒</div></div><div class="bcard-ov"><div class="bcard-name">Rohan Karki</div><div class="bcard-role">Barber & Stylist</div><p class="bcard-bio">Hot towel shave specialist. Loves bold transformations and modern techniques.</p></div></div>
-    <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#141414,#1f1f1f)"><div class="bcard-emoji">⭐</div></div><div class="bcard-ov"><div class="bcard-name">Bibek Rana</div><div class="bcard-role">Barber & Grooming</div><p class="bcard-bio">Creative cuts and color specialist. Always on top of the latest trends.</p></div></div>
+    <div class="bcard"><div class="bcard-bg" style="background:linear-gradient(160deg,#141414,#1f1f1f)"><div class="bcard-emoji">⭐</div></div><div class="bcard-ov"><div class="bcard-name">Bibek Rana</div><div class="bcard-role">Barber & Grooming</div><p class="bcard-bio">Creative cuts and colour specialist. Always on top of the latest trends.</p></div></div>
   </div>
 </section>
 
 <!-- GALLERY -->
 <section id="gallery">
-  <div class="rv" style="margin-bottom:48px"><div class="s-tag"><span>The Work</span></div><h2 class="s-h2">Our <em>Gallery</em></h2></div>
+  <div class="rv" style="margin-bottom:44px"><div class="s-tag"><span>The Work</span></div><h2 class="s-h2">Our <em>Gallery</em></h2></div>
   <div class="gal-grid rv">
-    <div class="gi"><div class="gi-in">✂️</div><div class="gi-ov"><div class="gi-label">Signature Cut</div><div class="gi-ln"></div></div></div>
+    <div class="gi"><div class="gi-in" style="font-size:90px">✂️</div><div class="gi-ov"><div class="gi-label">Signature Cut</div><div class="gi-ln"></div></div></div>
     <div class="gi"><div class="gi-in">💈</div><div class="gi-ov"><div class="gi-label">Classic Fade</div><div class="gi-ln"></div></div></div>
     <div class="gi"><div class="gi-in">🧔</div><div class="gi-ov"><div class="gi-label">Beard Sculpt</div><div class="gi-ln"></div></div></div>
-    <div class="gi"><div class="gi-in">🪒</div><div class="gi-ov"><div class="gi-label">Hot Shave</div><div class="gi-ln"></div></div></div>
+    <div class="gi"><div class="gi-in" style="font-size:60px">🪒</div><div class="gi-ov"><div class="gi-label">Hot Shave</div><div class="gi-ln"></div></div></div>
     <div class="gi"><div class="gi-in">⚡</div><div class="gi-ov"><div class="gi-label">Shape Up</div><div class="gi-ln"></div></div></div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
 <section class="team" id="testimonials">
-  <div style="text-align:center;margin-bottom:48px" class="rv"><div class="s-tag" style="justify-content:center"><span>Client Love</span></div><h2 class="s-h2">What They <em>Say</em></h2></div>
+  <div style="text-align:center;margin-bottom:44px" class="rv"><div class="s-tag" style="justify-content:center"><span>Client Love</span></div><h2 class="s-h2">What They <em>Say</em></h2></div>
   <div class="testi-grid rv">
-    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"Best barbershop in Pokhara, no contest. I've been coming here for 3 years and every single cut is perfect."</p><div class="tc-author"><div class="tc-av">RB</div><div><div class="tc-name">Rajan Bhandari</div><div class="tc-role">Pokhara</div></div></div></div>
-    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"The fade Sagar gave me had my whole friend group asking where I got it done. This place is something else."</p><div class="tc-author"><div class="tc-av">DT</div><div><div class="tc-name">Dipesh Tamang</div><div class="tc-role">Pokhara</div></div></div></div>
-    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"Clean shop, great vibes, and they actually listen to what you want. Never leaving Barber Nation."</p><div class="tc-author"><div class="tc-av">AS</div><div><div class="tc-name">Aarav Shrestha</div><div class="tc-role">Pokhara</div></div></div></div>
+    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"Best barbershop in Pokhara, no contest. 3 years and every single cut is perfect."</p><div class="tc-author"><div class="tc-av">RB</div><div><div class="tc-name">Rajan Bhandari</div><div class="tc-role">Pokhara</div></div></div></div>
+    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"The fade Sagar gave me had my whole friend group asking where I got it done."</p><div class="tc-author"><div class="tc-av">DT</div><div><div class="tc-name">Dipesh Tamang</div><div class="tc-role">Pokhara</div></div></div></div>
+    <div class="tc"><div class="tc-stars">★★★★★</div><p class="tc-text">"Clean shop, great vibes, they actually listen to what you want. Never leaving."</p><div class="tc-author"><div class="tc-av">AS</div><div><div class="tc-name">Aarav Shrestha</div><div class="tc-role">Pokhara</div></div></div></div>
   </div>
 </section>
 
 <!-- BOOKING -->
 <div class="booking" id="booking">
   <div class="bk-ring"></div><div class="bk-ring"></div><div class="bk-ring"></div>
-  <div class="booking-content rv">
+  <div class="bk-content rv">
     <h2>Ready to Look<br><em>Sharp?</em></h2>
     <p>Call us to book your slot — open 7 days a week in Pokhara.</p>
     <a href="tel:9805825193" class="btn-call">
       <span class="btn-call-main">📞 Call to Book</span>
       <span class="btn-call-num">9805825193</span>
     </a>
-    <p class="booking-hours">Open Daily · 9:00 AM – 8:00 PM</p>
+    <p class="bk-hours">Open Daily · 9:00 AM – 8:00 PM</p>
   </div>
 </div>
 
@@ -442,7 +616,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
     <div>
       <a href="#" class="f-logo">BARBER<span> NATION</span></a>
       <p class="f-desc">Your neighbourhood barbershop in the heart of Pokhara. Precision cuts, real craft, zero compromise.</p>
-      <div class="f-address">
+      <div class="f-addr">
         <strong>📍 Laliguras Tole, Pokhara-12</strong>
         📞 <a href="tel:9805825193" style="color:var(--gold);text-decoration:none">9805825193</a><br>
         🕐 Open Daily · 9AM – 8PM
@@ -451,11 +625,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
     <div class="f-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="#services">Signature Haircut</a></li>
+        <li><a href="#services">Haircut & Fade</a></li>
         <li><a href="#services">Hot Towel Shave</a></li>
         <li><a href="#services">Beard Sculpt</a></li>
-        <li><a href="#services">Fade & Shape-Up</a></li>
-        <li><a href="#services">Full Package</a></li>
+        <li><a href="#services">Hair Colour</a></li>
+        <li><a href="#services">Royal VIP Package</a></li>
       </ul>
     </div>
     <div class="f-col">
@@ -477,66 +651,99 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:66px 5
 
 <script>
 // LOADER
-setTimeout(()=>document.getElementById('loader').classList.add('hide'), 1900);
+setTimeout(()=>document.getElementById('loader').classList.add('hide'),2200);
 
-// CURSOR + TRAILS
-const cur=document.getElementById('cur'), curR=document.getElementById('curR');
+// HAMBURGER
+const ham=document.getElementById('ham'),mob=document.getElementById('mobileMenu');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
+});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  ham.classList.remove('open');mob.classList.remove('open');
+  document.body.style.overflow='';
+}));
+
+// CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
-const trailCount=7, trailEls=[];
-for(let i=0;i<trailCount;i++){
+const TRAILS=7,trails=[];
+for(let i=0;i<TRAILS;i++){
   const t=document.createElement('div');
-  t.className='trail';
-  t.style.cssText=`width:${7-i}px;height:${7-i}px`;
-  document.body.appendChild(t);
-  trailEls.push({el:t,x:0,y:0});
+  t.className='trail';t.style.cssText=`width:${7-i}px;height:${7-i}px`;
+  document.body.appendChild(t);trails.push({el:t,x:0,y:0});
 }
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
 (function raf(){
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
-  curR.style.left=rx+'px'; curR.style.top=ry+'px';
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  curR.style.left=rx+'px';curR.style.top=ry+'px';
   let px=mx,py=my;
-  trailEls.forEach((t,i)=>{
-    const sp=0.32-i*0.025;
-    t.x+=(px-t.x)*sp; t.y+=(py-t.y)*sp;
-    t.el.style.left=t.x+'px'; t.el.style.top=t.y+'px';
-    t.el.style.opacity=(trailCount-i)/(trailCount*1.6);
-    px=t.x; py=t.y;
+  trails.forEach((t,i)=>{
+    const sp=.32-i*.025;
+    t.x+=(px-t.x)*sp;t.y+=(py-t.y)*sp;
+    t.el.style.left=t.x+'px';t.el.style.top=t.y+'px';
+    t.el.style.opacity=(TRAILS-i)/(TRAILS*1.5);
+    px=t.x;py=t.y;
   });
   requestAnimationFrame(raf);
 })();
-document.querySelectorAll('a,button,.svc,.bcard,.gi,.tc,.st').forEach(el=>{
+document.querySelectorAll('a,button,.svc-row,.bcard,.gi,.tc,.st').forEach(el=>{
   el.addEventListener('mouseenter',()=>{
-    cur.style.cssText='left:'+mx+'px;top:'+my+'px;width:18px;height:18px;background:transparent;border:1.5px solid var(--gold)';
+    cur.style.cssText=`left:${mx}px;top:${my}px;width:18px;height:18px;background:transparent;border:1.5px solid var(--gold);border-radius:50%`;
     curR.style.transform='translate(-50%,-50%) scale(1.7)';
   });
   el.addEventListener('mouseleave',()=>{
-    cur.style.cssText='left:'+mx+'px;top:'+my+'px;width:8px;height:8px;background:var(--gold)';
+    cur.style.cssText=`left:${mx}px;top:${my}px;width:8px;height:8px;background:var(--gold);border-radius:50%`;
     curR.style.transform='translate(-50%,-50%) scale(1)';
   });
 });
 
-// NAV
+// NAV SCROLL
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+
+// 3D CARD MOUSE TILT
+const card3d=document.getElementById('card3d'),cardInner=document.getElementById('cardInner');
+if(card3d){
+  card3d.addEventListener('mousemove',e=>{
+    const r=card3d.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-.5)*22;
+    const y=((e.clientY-r.top)/r.height-.5)*-22;
+    cardInner.style.transform=`perspective(900px) rotateY(${x}deg) rotateX(${y}deg) scale3d(1.03,1.03,1.03)`;
+  });
+  card3d.addEventListener('mouseleave',()=>{
+    cardInner.style.transform='perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+  });
+  // idle float animation
+  let t=0;
+  function idleFloat(){
+    if(!card3d.matches(':hover')){
+      t+=0.008;
+      const x=Math.sin(t)*4,y=Math.cos(t*0.7)*3;
+      cardInner.style.transform=`perspective(900px) rotateY(${x}deg) rotateX(${y}deg)`;
+    }
+    requestAnimationFrame(idleFloat);
+  }
+  idleFloat();
+}
 
 // REVEAL
 const io=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{
-    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*70);io.unobserve(e.target)}
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*65);io.unobserve(e.target)}
   });
-},{threshold:.1});
+},{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>io.observe(el));
 
 // COUNTER
 function animCount(el,target,suffix){
-  const dur=1800; let start=null;
+  const dur=1800;let start=null;
   (function step(ts){
     if(!start)start=ts;
-    const p=Math.min((ts-start)/dur,1);
-    const e=1-Math.pow(1-p,3);
-    if(target>=1000) el.textContent=Math.floor(e*(target/1000)*10)/10+'K+';
-    else el.textContent=Math.floor(e*target)+(suffix||'');
+    const p=Math.min((ts-start)/dur,1),ez=1-Math.pow(1-p,3);
+    el.textContent=target>=1000?Math.floor(ez*(target/1000)*10)/10+'K+':(Math.floor(ez*target)+(suffix||''));
     if(p<1)requestAnimationFrame(step);
   })(performance.now());
 }
@@ -544,47 +751,32 @@ const cio=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       const el=e.target,t=+el.dataset.target,s=el.dataset.suffix||'';
-      if(t)animCount(el,t,s);
-      cio.unobserve(el);
+      if(t)animCount(el,t,s);cio.unobserve(el);
     }
   });
 },{threshold:.5});
 document.querySelectorAll('[data-target]').forEach(el=>cio.observe(el));
 
-// 3D TILT on service cards
-document.querySelectorAll('.svc').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const x=((e.clientX-r.left)/r.width-.5)*14;
-    const y=((e.clientY-r.top)/r.height-.5)*-14;
-    card.style.transform=`translateY(-5px) perspective(600px) rotateX(${y}deg) rotateY(${x}deg)`;
-  });
-  card.addEventListener('mouseleave',()=>card.style.transform='translateY(0) perspective(600px) rotateX(0) rotateY(0)');
-});
-
 // PARALLAX
 window.addEventListener('scroll',()=>{
   const s=scrollY;
-  const hc=document.querySelector('.hero-content');
-  const hd=document.querySelector('.hero-deco');
-  if(hc)hc.style.transform=`translateY(${s*.22}px)`;
-  if(hd)hd.style.transform=`translateY(calc(-50% + ${s*.13}px))`;
+  const hl=document.querySelector('.hero-left');
+  const hr=document.getElementById('heroRight');
+  if(hl)hl.style.transform=`translateY(${s*.16}px)`;
+  if(hr)hr.style.transform=`translateY(${s*.09}px)`;
 });
 
 // TEXT SCRAMBLE
-const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!';
+const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#!';
 function scramble(node){
-  const orig=node.textContent;
-  let iter=0;
+  const orig=node.textContent;let iter=0;
   const iv=setInterval(()=>{
     node.textContent=orig.split('').map((c,i)=>{
-      if(c===' '||c==='\n')return c;
-      if(i<iter)return orig[i];
+      if(c===' ')return c;if(i<iter)return orig[i];
       return CHARS[Math.floor(Math.random()*CHARS.length)];
     }).join('');
-    if(iter>=orig.length)clearInterval(iv);
-    iter+=1.3;
-  },38);
+    if(iter>=orig.length)clearInterval(iv);iter+=1.4;
+  },36);
 }
 const scio=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
@@ -592,23 +784,38 @@ const scio=new IntersectionObserver(entries=>{
       e.target.querySelectorAll('.s-h2').forEach(h=>{
         const tn=h.childNodes[0];
         if(tn&&tn.nodeType===3&&tn.textContent.trim())scramble(tn);
-      });
-      scio.unobserve(e.target);
+      });scio.unobserve(e.target);
     }
   });
-},{threshold:.45});
+},{threshold:.4});
 document.querySelectorAll('section').forEach(s=>scio.observe(s));
 
 // MAGNETIC BUTTONS
 document.querySelectorAll('.btn-gold,.btn-call,.nav-call').forEach(btn=>{
   btn.addEventListener('mousemove',e=>{
     const r=btn.getBoundingClientRect();
-    const x=(e.clientX-r.left-r.width/2)*.28;
-    const y=(e.clientY-r.top-r.height/2)*.28;
+    const x=(e.clientX-r.left-r.width/2)*.26;
+    const y=(e.clientY-r.top-r.height/2)*.26;
     btn.style.transform=`translate(${x}px,${y}px)`;
   });
   btn.addEventListener('mouseleave',()=>btn.style.transform='');
 });
+
+// SERVICE ROW stagger
+const svcRows=document.querySelectorAll('.svc-row');
+const svcIo=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    svcRows.forEach((r,i)=>{
+      r.style.opacity='0';r.style.transform='translateX(-14px)';
+      setTimeout(()=>{
+        r.style.transition='opacity .5s ease,transform .5s ease';
+        r.style.opacity='1';r.style.transform='translateX(0)';
+      },i*35);
+    });svcIo.disconnect();
+  }
+},{threshold:.04});
+const svcList=document.querySelector('.svc-list');
+if(svcList)svcIo.observe(svcList);
 </script>
 </body>
 </html>
