@@ -81,6 +81,14 @@ nav.scrolled{background:rgba(8,8,8,.96);backdrop-filter:blur(22px);padding:13px 
 @keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-2%,-2%)}66%{transform:translate(2%,1%)}100%{transform:translate(-1%,2%)}}
 .orb-hero{position:absolute;width:480px;height:480px;background:rgba(201,168,76,.045);border-radius:50%;filter:blur(110px);top:-150px;left:-80px;pointer-events:none;z-index:0;animation:ofl 10s ease-in-out infinite}
 @keyframes ofl{0%,100%{transform:translateY(0)}50%{transform:translateY(-28px)}}
+/* ── HERO TITLE SHIMMER ── */
+.hero-title .hw{position:relative}
+.hero-title .hw::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,transparent 0%,rgba(201,168,76,.55) 45%,rgba(232,201,122,.9) 50%,rgba(201,168,76,.55) 55%,transparent 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:0;animation:titleShimmer 5s 2.5s ease-in-out infinite}
+.hero-title .outline.hw::after{-webkit-text-stroke:0px;border:none}
+@keyframes titleShimmer{0%,100%{opacity:0;background-position:200% 0}30%{opacity:1}50%{background-position:-200% 0;opacity:1}70%,100%{opacity:0}}
+/* gold underline draw on BARBER */
+.hero-title .hw:first-child::before{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));animation:drawLine 1.2s 1.2s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes drawLine{to{width:100%}}
 
 /* ── MOBILE HERO FLOATERS (inside hero section) ── */
 .hero-float{position:absolute;font-size:28px;pointer-events:none;z-index:1;opacity:0;animation:heroFloat linear infinite}
@@ -341,7 +349,7 @@ section{padding:90px 48px;position:relative}
 
 /* ══ BOOKING ══ */
 .booking{background:var(--gold);padding:90px 48px;text-align:center;position:relative;overflow:hidden}
-.booking::before{content:'CALL NOW';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:min(20vw,240px);color:rgba(0,0,0,.055);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.booking::before{content:'TRAINING';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:min(20vw,240px);color:rgba(0,0,0,.055);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
 .bk-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,0,0,.07);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringExp 4s ease-out infinite;width:160px;height:160px}
 .bk-ring:nth-child(2){animation-delay:1.4s}.bk-ring:nth-child(3){animation-delay:2.8s}
 @keyframes ringExp{0%{width:160px;height:160px;opacity:.35}100%{width:680px;height:680px;opacity:0}}
@@ -358,19 +366,56 @@ section{padding:90px 48px;position:relative}
 .bk-hours{margin-top:20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.38);position:relative}
 
 /* ══ FOOTER ══ */
-footer{background:var(--black);border-top:1px solid var(--border);padding:58px 48px 28px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px;padding-bottom:38px;border-bottom:1px solid var(--border)}
-.f-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--white);display:block;margin-bottom:11px;text-decoration:none;transition:letter-spacing .4s}
+footer{background:var(--black);border-top:1px solid var(--border);padding:58px 48px 0;position:relative;overflow:hidden}
+footer::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);animation:footerSweep 4s 1s ease-in-out infinite;z-index:2}
+@keyframes footerSweep{0%{left:-100%}50%,100%{left:100%}}
+footer::after{content:'';position:absolute;bottom:80px;right:0;width:280px;height:280px;background:radial-gradient(ellipse at bottom right,rgba(201,168,76,.05),transparent 70%);pointer-events:none}
+/* top 3-col row */
+.footer-top-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid var(--border)}
+/* map: full-width row */
+.footer-map-row{padding:32px 0;border-bottom:1px solid var(--border);opacity:0;transform:translateY(18px);transition:opacity .8s .2s cubic-bezier(.16,1,.3,1),transform .8s .2s cubic-bezier(.16,1,.3,1)}
+.footer-map-row.fv{opacity:1;transform:translateY(0)}
+.footer-map-row h4{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500}
+.f-map-wrap{position:relative;overflow:hidden;border:1px solid var(--border);height:200px;transition:border-color .4s,box-shadow .4s;display:block;text-decoration:none}
+.f-map-wrap:hover{border-color:rgba(201,168,76,.4);box-shadow:0 0 30px rgba(201,168,76,.06)}
+.f-map-wrap iframe{width:100%;height:100%;display:block;filter:grayscale(100%) brightness(.62) contrast(1.15);transition:filter .5s;pointer-events:none;border:0}
+.f-map-wrap:hover iframe{filter:grayscale(75%) brightness(.78) contrast(1.1)}
+.f-map-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.88) 0%,rgba(8,8,8,.15) 45%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px;pointer-events:none}
+.f-map-label{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--gold)}
+.f-map-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.f-map-pin{position:absolute;top:50%;left:50%;font-size:26px;animation:pinBounce 2s ease-in-out infinite;z-index:2;pointer-events:none;transform:translate(-50%,-70%)}
+@keyframes pinBounce{0%,100%{transform:translate(-50%,-70%)}50%{transform:translate(-50%,-85%)}}
+/* bottom bar */
+.footer-bot{display:flex;justify-content:space-between;align-items:center;padding:20px 0 28px;font-size:11px;color:var(--muted);position:relative}
+.footer-bot::before{content:'';position:absolute;top:0;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent);transition:width 1.4s cubic-bezier(.16,1,.3,1)}
+.footer-bot.fv::before{width:100%}
+/* brand */
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:5px;color:var(--white);display:inline-block;margin-bottom:11px;text-decoration:none;transition:letter-spacing .4s;clip-path:inset(0 100% 0 0)}
+.f-logo.fv{clip-path:inset(0 0% 0 0);transition:clip-path .9s cubic-bezier(.16,1,.3,1),letter-spacing .4s}
 .f-logo:hover{letter-spacing:8px}.f-logo span{color:var(--gold)}
 .f-desc{font-size:13px;color:var(--muted);line-height:1.8}
-.f-addr{margin-top:16px;font-size:13px;color:var(--muted);line-height:2}
+.f-addr{margin-top:14px;font-size:13px;color:var(--muted);line-height:2}
 .f-addr strong{color:var(--cream);font-weight:500;display:block}
+/* social icon buttons */
+.f-social{display:flex;gap:10px;margin-top:18px}
+.f-soc-btn{width:42px;height:42px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;position:relative;overflow:hidden;flex-shrink:0;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s,border-color .3s}
+.f-soc-btn::before{content:'';position:absolute;inset:0;background:rgba(201,168,76,.1);transform:scale(0);border-radius:50%;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.f-soc-btn:hover{border-color:rgba(201,168,76,.5)}
+.f-soc-btn:hover{transform:translateY(-3px)!important}
+.f-soc-btn:hover::before{transform:scale(1.8)}
+.f-soc-btn svg{position:relative;z-index:1}
+.f-social.fv .f-soc-btn:nth-child(1){opacity:1;transform:translateY(0)}
+.f-social.fv .f-soc-btn:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.14s}
+/* nav cols */
 .f-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
 .f-col ul{list-style:none}
 .f-col ul li{margin-bottom:9px}
-.f-col ul a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .3s,padding-left .3s;display:block}
+.f-col ul a{color:var(--muted);text-decoration:none;font-size:13px;display:block;opacity:0;transform:translateX(-8px);transition:color .3s,padding-left .3s,opacity .5s,transform .5s}
 .f-col ul a:hover{color:var(--cream);padding-left:6px}
-.footer-bot{display:flex;justify-content:space-between;align-items:center;padding-top:24px;font-size:11px;color:var(--muted)}
+.f-col.fv ul a{opacity:1;transform:translateX(0)}
+/* floating tools */
+.footer-float{position:absolute;pointer-events:none;opacity:0;animation:footerFloat linear infinite}
+@keyframes footerFloat{0%{transform:translateY(50px) rotate(0deg);opacity:0}15%{opacity:.08}75%{opacity:.05}100%{transform:translateY(-40px) rotate(200deg);opacity:0}}
 
 /* ══ REVEAL ══ */
 .rv{opacity:0;transform:translateY(22px);transition:opacity .72s cubic-bezier(.16,1,.3,1),transform .72s cubic-bezier(.16,1,.3,1)}
@@ -388,6 +433,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:58px 4
   .mob-stats{display:grid}
   section{padding:58px 20px}
   .about-grid,.footer-grid{grid-template-columns:1fr}
+  .f-map{height:160px}
+  .footer-bot>div{flex-wrap:wrap;justify-content:center;gap:8px}
   .about-img{aspect-ratio:3/2}
   .team-grid{grid-template-columns:1fr 1fr}
   .svc-list{grid-template-columns:1fr}
@@ -395,7 +442,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:58px 4
   .testi-grid{grid-template-columns:1fr}
   .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,180px)}
   .gi:nth-child(1){grid-row:span 2}
-  .stats-row{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr;display:none}
   .st{border-bottom:1px solid var(--border)}
   .booking{padding:60px 20px}
   .footer-bot{flex-direction:column;gap:9px;text-align:center}
@@ -463,8 +510,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:58px 4
   <div class="hero-left">
     <div class="h-eyebrow"><span>Laliguras Tole · Pokhara-12 · Est. 2018</span></div>
     <h1 class="hero-title">
-      <span class="hl"><span class="hw">Barber</span></span>
-      <span class="hl"><span class="hw outline">Nation</span></span>
+      <span class="hl"><span class="hw" data-text="Barber">Barber</span></span>
+      <span class="hl"><span class="hw outline" data-text="Nation">Nation</span></span>
     </h1>
     <p class="hero-sub">Where every cut tells a story. Step in, sit back, and walk out as the sharpest version of yourself.</p>
     <div class="hero-btns">
@@ -679,52 +726,107 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:58px 4
 <div class="booking" id="booking">
   <div class="bk-ring"></div><div class="bk-ring"></div><div class="bk-ring"></div>
   <div class="bk-content rv">
-    <h2>Ready to Look<br><em>Sharp?</em></h2>
-    <p>Call us to book your slot — open 7 days a week in Pokhara.</p>
+    <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:16px;position:relative">
+      <div style="width:28px;height:1px;background:rgba(0,0,0,.3)"></div>
+      <span style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(0,0,0,.5);font-weight:500">Professional Training</span>
+      <div style="width:28px;height:1px;background:rgba(0,0,0,.3)"></div>
+    </div>
+    <h2>Learn The <em>Art of</em><br>Barbering</h2>
+    <p>Want to become a professional barber? We offer hands-on training programs led by our master barbers. Call us to know more about pricing and schedule.</p>
     <a href="tel:9805825193" class="btn-call">
-      <span class="btn-call-main">📞 Call to Book</span>
+      <span class="btn-call-main">📞 Call for Training</span>
       <span class="btn-call-num">9805825193</span>
     </a>
-    <p class="bk-hours">Open Daily · 9:00 AM – 8:00 PM</p>
+    <p class="bk-hours">Training Available · By Appointment Only</p>
   </div>
 </div>
 
-<footer>
-  <div class="footer-grid">
+<footer id="footer">
+
+  <!-- TOP 3-COL ROW -->
+  <div class="footer-top-row">
+    <!-- Brand -->
     <div>
-      <a href="#" class="f-logo">BARBER<span> NATION</span></a>
-      <p class="f-desc">Your neighbourhood barbershop in the heart of Pokhara. Precision cuts, real craft, zero compromise.</p>
-      <div class="f-addr">
+      <a href="#" class="f-logo" id="fLogo">BARBER<span> NATION</span></a>
+      <p class="f-desc rv">Your neighbourhood barbershop in the heart of Pokhara. Precision cuts, real craft, zero compromise.</p>
+      <div class="f-addr rv2">
         <strong>📍 Laliguras Tole, Pokhara-12</strong>
         📞 <a href="tel:9805825193" style="color:var(--gold);text-decoration:none">9805825193</a><br>
         🕐 Open Daily · 9AM – 8PM
       </div>
+      <!-- Real SVG social icons -->
+      <div class="f-social" id="fSocial">
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="f-soc-btn" title="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#C9A84C" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="#C9A84C"/>
+          </svg>
+        </a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener" class="f-soc-btn" title="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z" stroke="#C9A84C" stroke-width="1.5"/>
+            <path d="M10 12a3 3 0 1 0 3 3V7a4 4 0 0 0 4 4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
     </div>
-    <div class="f-col">
+    <!-- Services -->
+    <div class="f-col" id="fCol1">
       <h4>Services</h4>
       <ul>
-        <li><a href="#services">Haircut & Fade</a></li>
-        <li><a href="#services">Hot Towel Shave</a></li>
-        <li><a href="#services">Beard Sculpt</a></li>
-        <li><a href="#services">Hair Colour</a></li>
-        <li><a href="#services">Royal VIP Package</a></li>
+        <li><a href="#services" style="transition-delay:.04s">Haircut & Fade</a></li>
+        <li><a href="#services" style="transition-delay:.09s">Hot Towel Shave</a></li>
+        <li><a href="#services" style="transition-delay:.14s">Beard Sculpt</a></li>
+        <li><a href="#services" style="transition-delay:.19s">Hair Colour</a></li>
+        <li><a href="#services" style="transition-delay:.24s">Royal VIP Package</a></li>
+        <li><a href="#booking" style="transition-delay:.29s">Training Program</a></li>
       </ul>
     </div>
-    <div class="f-col">
+    <!-- Navigate -->
+    <div class="f-col" id="fCol2">
       <h4>Navigate</h4>
       <ul>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#team">Our Team</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#testimonials">Reviews</a></li>
-        <li><a href="tel:9805825193">Book Now</a></li>
+        <li><a href="#about" style="transition-delay:.04s">About Us</a></li>
+        <li><a href="#team" style="transition-delay:.09s">Our Team</a></li>
+        <li><a href="#gallery" style="transition-delay:.14s">Gallery</a></li>
+        <li><a href="#testimonials" style="transition-delay:.19s">Reviews</a></li>
+        <li><a href="#booking" style="transition-delay:.24s">Training</a></li>
+        <li><a href="tel:9805825193" style="transition-delay:.29s">Book Now</a></li>
       </ul>
     </div>
   </div>
-  <div class="footer-bot">
-    <span>© 2025 Barber Nation, Pokhara. All rights reserved.</span>
-    <span style="color:var(--gold)">Crafted with ✂️ in Pokhara</span>
+
+  <!-- MAP FULL-WIDTH ROW -->
+  <div class="footer-map-row" id="fMapRow">
+    <h4>📍 Find Us — Laliguras Tole, Pokhara-12</h4>
+    <a href="https://maps.app.goo.gl/F9jA2bM5FrVsoyFGA" target="_blank" rel="noopener" class="f-map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d884.3!2d83.98541!3d28.20982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995937b27bfffff%3A0xfaac1e2d0de28e44!2sLaliguras%20Tole%2C%20Pokhara%2033700!5e0!3m2!1sen!2snp!4v1716000000000!5m2!1sen!2snp"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="f-map-pin">📍</div>
+      <div class="f-map-overlay">
+        <div class="f-map-label">BARBER NATION</div>
+        <div class="f-map-sub">Laliguras Tole, Pokhara-12 · Click to open in Maps</div>
+      </div>
+    </a>
   </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="footer-bot" id="footerBot">
+    <span>© 2025 Barber Nation, Pokhara. All rights reserved.</span>
+    <div style="display:flex;align-items:center;gap:18px">
+      <a href="https://instagram.com" target="_blank" style="color:var(--muted);font-size:11px;text-decoration:none;letter-spacing:1px;transition:color .3s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color=''">Instagram</a>
+      <span style="color:var(--border)">·</span>
+      <a href="https://tiktok.com" target="_blank" style="color:var(--muted);font-size:11px;text-decoration:none;letter-spacing:1px;transition:color .3s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color=''">TikTok</a>
+      <span style="color:var(--border)">·</span>
+      <span style="color:var(--gold)">Crafted with ✂️ in Pokhara</span>
+    </div>
+  </div>
+
 </footer>
 
 <script>
@@ -879,6 +981,69 @@ const svcIo=new IntersectionObserver(entries=>{
   }
 },{threshold:.04});
 const sl=document.querySelector('.svc-list');if(sl)svcIo.observe(sl);
+
+// ── MOBILE VIZ TICK MARKS ──
+const mvTicks=document.getElementById('mvTicks');
+if(mvTicks){
+  for(let i=0;i<36;i++){
+    const t=document.createElement('div');t.className='mv-tick';
+    const ang=i/36*360;const r1=94,r2=i%3===0?82:89;
+    const a=ang*Math.PI/180;
+    t.style.cssText=`transform:rotate(${ang}deg) translateX(0);left:50%;top:50%;transform-origin:0 0;transform:rotate(${ang}deg)`;
+    const inner=document.createElement('div');inner.className='mv-tick-i';
+    inner.style.cssText=`height:${i%3===0?14:8}px;background:rgba(201,168,76,${i%3===0?.55:.22});margin-left:-0.5px;margin-top:${r2}px`;
+    t.appendChild(inner);mvTicks.appendChild(t);
+  }
+}
+
+// ── HERO TITLE GLITCH PULSE (random subtle glitch on "BARBER") ──
+const hw1=document.querySelector('.hero-title .hw:first-child');
+if(hw1){
+  function glitchOnce(){
+    const orig=hw1.style.transform;
+    hw1.style.transition='none';
+    hw1.style.transform='translateX(3px)';hw1.style.opacity='.85';
+    setTimeout(()=>{hw1.style.transform='translateX(-2px)';hw1.style.opacity='1'},60);
+    setTimeout(()=>{hw1.style.transform='translateX(1px)'},110);
+    setTimeout(()=>{hw1.style.transform='translateX(0)'},160);
+  }
+  // glitch every 4-8 seconds randomly
+  function scheduleGlitch(){setTimeout(()=>{glitchOnce();scheduleGlitch()},4000+Math.random()*4000)}
+  setTimeout(scheduleGlitch,3000);
+}
+
+// ── FOOTER ANIMATIONS ──
+// Spawn floating tools inside footer
+const footerEl=document.getElementById('footer');
+if(footerEl){
+  const fTools=['✂️','💈','🪒','✂️','💈'];
+  fTools.forEach((t,i)=>{
+    const el=document.createElement('div');el.className='footer-float';
+    el.textContent=t;
+    el.style.fontSize=(13+Math.random()*10)+'px';
+    el.style.left=(5+i*20+Math.random()*10)+'%';
+    el.style.bottom='0';
+    el.style.animationDuration=(7+Math.random()*8)+'s';
+    el.style.animationDelay=(i*1.2+Math.random()*2)+'s';
+    footerEl.appendChild(el);
+  });
+}
+
+// Footer scroll-reveal: logo clip, col links stagger, social, map, bottom line
+const footerIO=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    const fl=document.getElementById('fLogo');if(fl)fl.classList.add('fv');
+    const fs=document.getElementById('fSocial');if(fs)setTimeout(()=>fs.classList.add('fv'),300);
+    const fm=document.getElementById('fMap');if(fm)setTimeout(()=>fm.classList.add('fv'),500);
+    ['fCol1','fCol2'].forEach((id,ci)=>{
+      const col=document.getElementById(id);
+      if(col)setTimeout(()=>col.classList.add('fv'),150+ci*150);
+    });
+    setTimeout(()=>{const fb=document.getElementById('footerBot');if(fb)fb.classList.add('fv')},700);
+    footerIO.disconnect();
+  }
+},{threshold:.1});
+if(footerEl)footerIO.observe(footerEl);
 </script>
 </body>
 </html>
